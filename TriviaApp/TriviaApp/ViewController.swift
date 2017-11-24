@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CategoryCellDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -20,6 +20,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let titleCollection = ["General Knowledge","Entertainment: Books","Entertainment: Film","Entertainment: Music","Entertainment: Games","Entertainment: TV","Science: Computers","Celebrities","History","Animals"]
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -54,8 +55,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCell
+        cell.setDelegate(categoryCellDelegate: self)
         cell.setBackgrounds(backgroundImage: backgroundImageCollection[indexPath.row], title: titleCollection[indexPath.row], iconImage: iconImageCollection[indexPath.row])
         return cell
     }
+    
+    func goToQuestion(id: String) {
+        let vc = QuestionViewController()
+        vc.questionId = id
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }
 
